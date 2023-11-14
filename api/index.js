@@ -10,6 +10,9 @@ const app = express();
 
 app.use(express.json());
 
+app.listen(3344, () => {
+  console.log(`server is listening on port 3344`);
+});
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -22,6 +25,12 @@ mongoose
 app.use("/api/user/", userRoutes);
 app.use("/api/auth", authRoutes);
 
-app.listen(3344, () => {
-  console.log(`server is listening on port 3344`);
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Err";
+  return res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
 });
