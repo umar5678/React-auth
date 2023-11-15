@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const hndlChng = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -29,6 +29,7 @@ const Signup = () => {
         setErr(true);
         return;
       }
+      navigate("/log-in");
     } catch (err) {
       setLoading(false);
       setErr(true);
@@ -56,7 +57,7 @@ const Signup = () => {
         <input
           onChange={hndlChng}
           type="password"
-          placeholder="Username"
+          placeholder="Password"
           id="password"
           className="bg-slate-200 p-3 rounded-lg"
         />
