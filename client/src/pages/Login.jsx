@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../redux/user/userSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
-  const [err, setErr] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const { loading, err } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const hndlChng = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -16,25 +23,22 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      setLoading(true);
-      setErr(false);
+      dispatch(loginStart());
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setLoading(false);
-      setErr(false);
       console.log(data);
       if (data.success === false) {
-        setErr(true);
+        dispatch(loginFailure(data));
         return;
       }
+      dispatch(loginSuccess(data));
       navigate("/");
     } catch (err) {
-      setLoading(false);
-      setErr(true);
+      dispatch(loginFailure(err));
     }
   };
 
@@ -72,7 +76,7 @@ const Login = () => {
         </p>
       </div>
       <p className="text-red-600 mt-2 font-semibold">
-        {err && "Something went wrong!"}
+        {err ? err.message || "Something went wrong!" : ""}
       </p>
     </div>
   );
