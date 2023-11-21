@@ -6,6 +6,7 @@ import {
   loginSuccess,
   loginFailure,
 } from "../redux/user/userSlice";
+import GoogleOAuth from "../components/GoogleOAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -66,6 +67,7 @@ const Login = () => {
         >
           {loading ? "Loading..." : "Login"}
         </button>
+        <GoogleOAuth />
       </form>
       <div className="">
         <p className="pt-2">

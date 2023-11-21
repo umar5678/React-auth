@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GoogleOAuth from "../components/GoogleOAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -67,6 +68,7 @@ const Signup = () => {
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
+        <GoogleOAuth />
       </form>
       <div className="">
         <p className="pt-2">
