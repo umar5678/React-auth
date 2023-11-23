@@ -62,9 +62,9 @@ const Profile = () => {
         />
         <img
           onClick={() => fileRef.current.click()}
-          src={currUser.profilePhoto}
+          src={formData.profilePhoto || currUser.profilePhoto}
           alt="Profile Photo"
-          className="rounded-full mx-auto my-2 cursor-pointer object-cover mt-2"
+          className="rounded-full w-32 h-32 mx-auto my-2 cursor-pointer object-cover mt-2"
         />
         <p className="self-center">
           {imgUploadErr ? (
