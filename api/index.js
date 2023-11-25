@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-const PORT = 'react-auth-xi.vercel.app' || 3000
+const PORT = 'https://react-auth-xi.vercel.app' || 3000
 
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
