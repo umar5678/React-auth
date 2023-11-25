@@ -12,6 +12,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/userSlice";
 
 const Profile = () => {
@@ -65,7 +68,6 @@ const Profile = () => {
       [e.target.id]: e.target.value,
     });
   };
-  console.log(formData);
 
   const handleSubmitAndUpdate = async (e) => {
     e.preventDefault();
@@ -88,6 +90,24 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (err) {
       dispatch(updateUserFailure(err));
+    }
+  };
+
+  const handleDelAcc = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (err) {
+      dispatch(deleteUserFailure(err));
     }
   };
 
@@ -149,7 +169,9 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between pt-2 text-lg">
-        <span className="text-red-700 cursor-pointer">Delete Account</span>
+        <span onClick={handleDelAcc} className="text-red-700 cursor-pointer">
+          Delete Account
+        </span>
         <span className="text-red-700 cursor-pointer">Sign Out</span>
       </div>
       <p className="text-red-600 mt-2">{err && "Something went wrong"}</p>
