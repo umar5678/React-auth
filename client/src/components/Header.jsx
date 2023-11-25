@@ -27,7 +27,9 @@ const Header = () => {
                 className="h-8 w-8 rounded-full object-cover"
               />
             ) : (
-              <li>Signup</li>
+              <Link to="/sign-up">
+                <li>Signup</li>
+              </Link>
             )}
           </Link>
         </ul>
